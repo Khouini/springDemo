@@ -1,9 +1,6 @@
 package esprit.tn.springdemo.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +17,7 @@ public class Foyer {
     private Long id;
     private String nom;
     private long capacite;
+
+    @OneToOne
+    private Universite universite;
 }
