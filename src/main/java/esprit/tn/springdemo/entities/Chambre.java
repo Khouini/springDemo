@@ -16,7 +16,10 @@ public class Chambre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   Long numero;
+    private long numero;
     @Enumerated(EnumType.STRING)
-   TypeChambre type;
+    private TypeChambre type;
+
+    @ManyToOne
+    private Bloc bloc;
 }

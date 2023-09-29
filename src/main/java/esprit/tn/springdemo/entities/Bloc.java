@@ -2,6 +2,8 @@ package esprit.tn.springdemo.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Bloc {
 
@@ -13,4 +15,7 @@ public class Bloc {
 
     @ManyToOne
     private Foyer foyer;
+
+    @OneToMany(mappedBy = "bloc")
+    private List<Chambre> chambres;
 }
