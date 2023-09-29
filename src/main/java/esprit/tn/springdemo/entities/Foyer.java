@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -20,4 +22,7 @@ public class Foyer {
 
     @OneToOne
     private Universite universite;
+
+    @OneToMany(mappedBy = "foyer")
+    private List<Bloc> blocs;
 }
