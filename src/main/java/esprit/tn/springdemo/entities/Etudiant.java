@@ -1,14 +1,13 @@
 package esprit.tn.springdemo.entities;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +23,7 @@ public class Etudiant {
     long cin;
     String ecole;
     LocalDate dateNaissance;
+
+    @ManyToMany(mappedBy = "etudiants")
+    private List<Reservation> reservations;
 }
