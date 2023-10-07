@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,6 +26,7 @@ public class Chambre {
     @ManyToOne
     private Bloc bloc;
 
-    @OneToMany(mappedBy = "chambre")
-    private List<Reservation> reservations;
+    //@OneToMany(mappedBy = "chambre")
+    @OneToMany
+    private Set<Reservation> reservations;
 }

@@ -22,12 +22,14 @@ public class Reservation {
     private Date anneeUniversitaire;
     private Boolean estValide;
 
-    @ManyToOne
-    private Chambre chambre;
+    //@ManyToOne
+    //private Chambre chambre;
 
-    @ManyToMany
+    /*@ManyToMany(mappedBy = "reservations")
     @JoinTable(name = "etudiants_reservations",
             joinColumns = @JoinColumn(name = "reservation_id"),
-            inverseJoinColumns = @JoinColumn(name = "etudiant_id"))
+            inverseJoinColumns = @JoinColumn(name = "etudiant_id"))*/
+
+    @ManyToMany
     private List<Etudiant> etudiants;
 }
