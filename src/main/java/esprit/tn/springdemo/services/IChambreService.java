@@ -2,6 +2,7 @@ package esprit.tn.springdemo.services;
 
 import esprit.tn.springdemo.entities.Chambre;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface IChambreService {
@@ -13,5 +14,7 @@ public interface IChambreService {
     Chambre updateChambre(Chambre c);
 
     Chambre retrieveChambre(long idChambre);
+
+    List<Chambre> getChambreByReservationAnneeUniversitaire(Date dateDebut, Date dateFin);
 
 }

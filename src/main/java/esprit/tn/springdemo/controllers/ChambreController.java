@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -33,4 +34,10 @@ public class ChambreController {
     public Chambre retrieveChambre(@PathVariable long idChambre) {
         return iChambreService.retrieveChambre(idChambre);
     }
+
+    /*@GetMapping("ChambreByReservationAnneeUniversitaire/{dateDebut}/{dateFin}")
+    public List<Chambre> getChambreByReservationAnneeUniversitaire(@PathVariable Date dateDebut, @PathVariable Date dateFin) {
+        return iChambreService.getChambreByReservationAnneeUniversitaire(dateDebut, dateFin);
+    }*
+     */
 }
