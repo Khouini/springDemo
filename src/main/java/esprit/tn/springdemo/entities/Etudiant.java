@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Etudiant {
     String prenom;
     long cin;
     String ecole;
-    LocalDate dateNaissance;
+    Date dateNaissance;
 
     @ManyToMany(mappedBy = "etudiants")
     //@ManyToMany
