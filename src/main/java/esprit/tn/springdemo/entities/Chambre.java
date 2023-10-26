@@ -1,5 +1,6 @@
 package esprit.tn.springdemo.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,22 @@ public class Chambre {
     @Enumerated(EnumType.STRING)
     private TypeChambre type;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private Bloc bloc;
 
     //@OneToMany(mappedBy = "chambre")
     @OneToMany
     private Set<Reservation> reservations;
+
+    @Override
+    public String toString() {
+        return "Chambre{" +
+                "id=" + id +
+                ", numero=" + numero +
+                ", type=" + type +
+                ", bloc=" + bloc +
+                ", reservations=" + reservations +
+                '}';
+    }
 }

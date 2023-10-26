@@ -1,34 +1,40 @@
 package esprit.tn.springdemo.services;
 
 import esprit.tn.springdemo.entities.Bloc;
+import esprit.tn.springdemo.repositories.BlocRepo;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@AllArgsConstructor
 public class BlocServiceImpl implements IBlocService {
-    IBlocService blocService;
+    private final BlocRepo blocRepo;
 
     @Override
     public List<Bloc> retrieveBlocs() {
-        return blocService.retrieveBlocs();
+        return blocRepo.findAll();
     }
 
     @Override
     public Bloc updateBloc(Bloc bloc) {
-        return blocService.updateBloc(bloc);
+        return blocRepo.save(bloc);
     }
 
     @Override
     public Bloc addBloc(Bloc bloc) {
-        return blocService.addBloc(bloc);
+        return blocRepo.save(bloc);
     }
 
     @Override
     public Bloc retrieveBloc(long idBloc) {
-        return blocService.retrieveBloc(idBloc);
+        return blocRepo.findById(idBloc).orElse(null);
     }
 
     @Override
     public void removeBloc(long idBloc) {
-        blocService.removeBloc(idBloc);
+        blocRepo.deleteById(idBloc);
+
     }
 }

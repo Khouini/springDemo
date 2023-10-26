@@ -17,4 +17,7 @@ public interface IChambreService {
 
     List<Chambre> getChambreByReservationAnneeUniversitaire(Date dateDebut, Date dateFin);
 
+    List<Chambre> getCChambresByNomBloc(String nom);
+
+    Chambre afftecterChambreABloc(long idChambre, String nomBloc);
 }

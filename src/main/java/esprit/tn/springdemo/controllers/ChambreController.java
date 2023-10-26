@@ -35,6 +35,16 @@ public class ChambreController {
         return iChambreService.retrieveChambre(idChambre);
     }
 
+    @GetMapping("/byNomBloc/{nom}")
+    public List<Chambre> getChambresByNomBloc(@PathVariable String nom) {
+        return iChambreService.getCChambresByNomBloc(nom);
+    }
+
+    @PostMapping("/affecterABloc/{idChambre}/{nomBloc}")
+    public Chambre affecterChambreABloc(@PathVariable long idChambre, @PathVariable String nomBloc) {
+        return iChambreService.afftecterChambreABloc(idChambre, nomBloc);
+    }
+
     /*@GetMapping("ChambreByReservationAnneeUniversitaire/{dateDebut}/{dateFin}")
     public List<Chambre> getChambreByReservationAnneeUniversitaire(@PathVariable Date dateDebut, @PathVariable Date dateFin) {
         return iChambreService.getChambreByReservationAnneeUniversitaire(dateDebut, dateFin);

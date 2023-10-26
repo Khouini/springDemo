@@ -1,10 +1,16 @@
 package esprit.tn.springdemo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+
 public class Bloc {
 
     @Id
@@ -13,10 +19,12 @@ public class Bloc {
     private String nom;
     private String capacite;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Foyer foyer;
 
-    @OneToMany(mappedBy = "bloc", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bloc")
+    @JsonBackReference
+    //@OneToMany(mappedBy = "bloc", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     // FetchType.Lazy : Load only Bloc data
     // FetchType.Eager : Load Bloc data and Chambre data
     // By default, the fetch type for @ManyToOne and @OneToOne relationships is EAGER
@@ -26,4 +34,15 @@ public class Bloc {
     // CascadeType.REMOVE : Apply only remove operation on Chambre to Bloc
     // CascadeType.REFRESH : Apply only refresh operation on Chambre to Bloc
     private List<Chambre> chambres;
+
+    @Override
+    public String toString() {
+        return "Bloc{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", capacite='" + capacite + '\'' +
+                ", foyer=" + foyer +
+                ", chambres=" + chambres +
+                '}';
+    }
 }

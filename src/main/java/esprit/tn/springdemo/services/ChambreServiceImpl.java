@@ -1,7 +1,9 @@
 package esprit.tn.springdemo.services;
 
+import esprit.tn.springdemo.entities.Bloc;
 import esprit.tn.springdemo.entities.Chambre;
 import esprit.tn.springdemo.entities.Reservation;
+import esprit.tn.springdemo.repositories.BlocRepo;
 import esprit.tn.springdemo.repositories.ChambreRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ChambreServiceImpl implements IChambreService {
     ChambreRepo chambreRepo;
+    BlocRepo blocRepo;
 
     @Override
     public List<Chambre> retrieveAllChambres() {
@@ -48,5 +51,17 @@ public class ChambreServiceImpl implements IChambreService {
         return chambres;
     }
 
+    @Override
+    public List<Chambre> getCChambresByNomBloc(String nom) {
+        return chambreRepo.findChambresByBloc_Nom(nom);
+    }
 
+    @Override
+    public Chambre afftecterChambreABloc(long idChambre, String nomBloc) {
+        Chambre chambre = chambreRepo.findById(idChambre).orElse(null);
+        Bloc bloc = blocRepo.findByNom(nomBloc);
+        chambre.setBloc(bloc);
+        Chambre savedChambre = chambreRepo.save(chambre);
+        return savedChambre;
+    }
 }
