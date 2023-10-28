@@ -48,4 +48,8 @@ public class Bloc {
                 ", chambres=" + chambres +
                 '}';
     }
+
+    public void setIdBloc(long idBloc) {
+        this.id = idBloc;
+    }
 }

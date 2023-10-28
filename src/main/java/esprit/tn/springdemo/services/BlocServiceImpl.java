@@ -35,6 +35,5 @@ public class BlocServiceImpl implements IBlocService {
     @Override
     public void removeBloc(long idBloc) {
         blocRepo.deleteById(idBloc);
-
     }
 }
