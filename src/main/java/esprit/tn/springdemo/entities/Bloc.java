@@ -1,6 +1,8 @@
 package esprit.tn.springdemo.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +24,9 @@ public class Bloc {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Foyer foyer;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bloc")
-    @JsonBackReference
+    //
     //@OneToMany(mappedBy = "bloc", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     // FetchType.Lazy : Load only Bloc data
     // FetchType.Eager : Load Bloc data and Chambre data

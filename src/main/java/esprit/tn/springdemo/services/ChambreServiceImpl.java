@@ -58,8 +58,18 @@ public class ChambreServiceImpl implements IChambreService {
 
     @Override
     public Chambre afftecterChambreABloc(long idChambre, String nomBloc) {
+        System.out.println("Before affecting chambre with id " + idChambre + " to bloc with nom " + nomBloc);
+        System.out.println("Searching for chambre with id " + idChambre);
         Chambre chambre = chambreRepo.findById(idChambre).orElse(null);
+        System.out.println("Found chambre: " + chambre);
+        if (chambre == null) {
+            throw new RuntimeException("Chambre not found");
+        }
         Bloc bloc = blocRepo.findByNom(nomBloc);
+        System.out.println("Found bloc: " + bloc);
+        if (bloc == null) {
+            throw new RuntimeException("Bloc not found");
+        }
         chambre.setBloc(bloc);
         Chambre savedChambre = chambreRepo.save(chambre);
         return savedChambre;

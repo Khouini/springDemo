@@ -22,22 +22,36 @@ public class ChambreController {
 
     @PostMapping("")
     public Chambre addChambre(@RequestBody Chambre c) {
+        System.out.println("Before adding chambre: " + c);
         return iChambreService.addChambre(c);
     }
 
-    @PutMapping("")
-    public Chambre updateChambre(@RequestBody Chambre c) {
+    @PutMapping("/{idChambre}")
+    public Chambre updateChambre(@RequestBody Chambre c, @PathVariable long idChambre) {
+        Chambre foundChambre = iChambreService.retrieveChambre(idChambre);
+        if (foundChambre == null) {
+            throw new RuntimeException("Chambre not found");
+        }
+        c.setIdChambre(idChambre);
         return iChambreService.updateChambre(c);
     }
 
     @GetMapping("/{idChambre}")
     public Chambre retrieveChambre(@PathVariable long idChambre) {
-        return iChambreService.retrieveChambre(idChambre);
+        Chambre foundChambre = iChambreService.retrieveChambre(idChambre);
+        if (foundChambre == null) {
+            throw new RuntimeException("Chambre not found");
+        }
+        return foundChambre;
     }
 
     @GetMapping("/byNomBloc/{nom}")
     public List<Chambre> getChambresByNomBloc(@PathVariable String nom) {
-        return iChambreService.getCChambresByNomBloc(nom);
+        List<Chambre> chambres = iChambreService.getCChambresByNomBloc(nom);
+        if (chambres == null || chambres.isEmpty()) {
+            throw new RuntimeException("Chambres not found");
+        }
+        return chambres;
     }
 
     @PostMapping("/affecterABloc/{idChambre}/{nomBloc}")

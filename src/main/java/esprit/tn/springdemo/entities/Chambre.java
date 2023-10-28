@@ -1,5 +1,7 @@
 package esprit.tn.springdemo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,11 +26,13 @@ public class Chambre {
     @Enumerated(EnumType.STRING)
     private TypeChambre type;
 
+
+    //@JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JsonManagedReference
     private Bloc bloc;
 
-    //@OneToMany(mappedBy = "chambre")
+
+    //@JsonManagedReference
     @OneToMany
     private Set<Reservation> reservations;
 
@@ -41,5 +45,9 @@ public class Chambre {
                 ", bloc=" + bloc +
                 ", reservations=" + reservations +
                 '}';
+    }
+
+    public void setIdChambre(long idChambre) {
+        this.id = idChambre;
     }
 }
