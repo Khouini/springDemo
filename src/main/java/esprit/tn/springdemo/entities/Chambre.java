@@ -36,18 +36,18 @@ public class Chambre {
     @OneToMany
     private Set<Reservation> reservations;
 
+    public void setIdChambre(long idChambre) {
+        this.id = idChambre;
+    }
+
     @Override
     public String toString() {
         return "Chambre{" +
                 "id=" + id +
                 ", numero=" + numero +
                 ", type=" + type +
-                ", bloc=" + bloc +
-                ", reservations=" + reservations +
+                //", bloc=" + bloc +
+                //", reservations=" + reservations +
                 '}';
-    }
-
-    public void setIdChambre(long idChambre) {
-        this.id = idChambre;
     }
 }

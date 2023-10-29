@@ -1,9 +1,12 @@
 package esprit.tn.springdemo.controllers;
 
 import esprit.tn.springdemo.entities.Chambre;
+import esprit.tn.springdemo.responses.ApiResponse;
 import esprit.tn.springdemo.services.IChambreService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -16,47 +19,92 @@ public class ChambreController {
     private final IChambreService iChambreService;
 
     @GetMapping("")
-    public List<Chambre> retrieveAllChambres() {
-        return iChambreService.retrieveAllChambres();
+    public ResponseEntity<ApiResponse> retrieveChambres(@RequestParam(required = false) String nomBloc) {
+        ApiResponse apiResponse = new ApiResponse();
+        List<Chambre> chambres;
+        Boolean isNomBlocProvided = nomBloc != null && !nomBloc.isEmpty();
+        try {
+            if (isNomBlocProvided) {
+                chambres = iChambreService.getCChambresByNomBloc(nomBloc);
+            } else {
+                chambres = iChambreService.retrieveAllChambres();
+            }
+            Boolean isChambresEmpty = chambres == null || chambres.isEmpty();
+            String message = !isNomBlocProvided ? "Chambres retrieved" : "Chambres retrieved by bloc";
+            HttpStatus httpStatus = (isChambresEmpty) ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+            if (isChambresEmpty) {
+                message += " (empty)";
+            }
+            apiResponse.setResponse(httpStatus, message);
+            apiResponse.addData("chambres", chambres);
+        } catch (Exception e) {
+            apiResponse.setResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
     }
 
+
     @PostMapping("")
-    public Chambre addChambre(@RequestBody Chambre c) {
-        System.out.println("Before adding chambre: " + c);
-        return iChambreService.addChambre(c);
+    public ResponseEntity<ApiResponse> addChambre(@RequestBody Chambre c) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            Chambre addedChambre = iChambreService.addChambre(c);
+            //throw new RuntimeException("Test exception");
+            apiResponse.setResponse(org.springframework.http.HttpStatus.CREATED, "Chambre added");
+            apiResponse.addData("chambre", addedChambre);
+        } catch (Exception e) {
+            apiResponse.setResponse(org.springframework.http.HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
     }
 
     @PutMapping("/{idChambre}")
-    public Chambre updateChambre(@RequestBody Chambre c, @PathVariable long idChambre) {
-        Chambre foundChambre = iChambreService.retrieveChambre(idChambre);
-        if (foundChambre == null) {
-            throw new RuntimeException("Chambre not found");
+    public ResponseEntity<ApiResponse> updateChambre(@RequestBody Chambre c, @PathVariable long idChambre) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            Chambre foundChambre = iChambreService.retrieveChambre(idChambre);
+            if (foundChambre == null) {
+                throw new RuntimeException("Chambre not found");
+            }
+            c.setIdChambre(idChambre);
+            Chambre updatedChambre = iChambreService.updateChambre(c);
+            apiResponse.setResponse(org.springframework.http.HttpStatus.OK, "Chambre updated");
+            apiResponse.addData("chambre", updatedChambre);
+        } catch (Exception e) {
+            apiResponse.setResponse(org.springframework.http.HttpStatus.BAD_REQUEST, e.getMessage());
         }
-        c.setIdChambre(idChambre);
-        return iChambreService.updateChambre(c);
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
     }
 
     @GetMapping("/{idChambre}")
-    public Chambre retrieveChambre(@PathVariable long idChambre) {
-        Chambre foundChambre = iChambreService.retrieveChambre(idChambre);
-        if (foundChambre == null) {
-            throw new RuntimeException("Chambre not found");
+    public ResponseEntity<ApiResponse> retrieveChambre(@PathVariable long idChambre) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            Chambre chambre = iChambreService.retrieveChambre(idChambre);
+            if (chambre == null) {
+                throw new RuntimeException("Chambre not found");
+            }
+            apiResponse.setResponse(org.springframework.http.HttpStatus.OK, "Chambre retrieved");
+            apiResponse.addData("chambre", chambre);
+        } catch (Exception e) {
+            apiResponse.setResponse(org.springframework.http.HttpStatus.BAD_REQUEST, e.getMessage());
         }
-        return foundChambre;
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
     }
 
-    @GetMapping("/byNomBloc/{nom}")
-    public List<Chambre> getChambresByNomBloc(@PathVariable String nom) {
-        List<Chambre> chambres = iChambreService.getCChambresByNomBloc(nom);
-        if (chambres == null || chambres.isEmpty()) {
-            throw new RuntimeException("Chambres not found");
-        }
-        return chambres;
-    }
 
     @PostMapping("/affecterABloc/{idChambre}/{nomBloc}")
-    public Chambre affecterChambreABloc(@PathVariable long idChambre, @PathVariable String nomBloc) {
-        return iChambreService.afftecterChambreABloc(idChambre, nomBloc);
+    public ResponseEntity<ApiResponse> afftecterChambreABloc(@PathVariable long idChambre, @PathVariable String nomBloc) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            Chambre chambre = iChambreService.afftecterChambreABloc(idChambre, nomBloc);
+            apiResponse.setResponse(org.springframework.http.HttpStatus.OK, "Chambre affected");
+            apiResponse.addData("chambre", chambre);
+        } catch (Exception e) {
+            apiResponse.setResponse(org.springframework.http.HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
     }
 
     /*@GetMapping("ChambreByReservationAnneeUniversitaire/{dateDebut}/{dateFin}")

@@ -28,4 +28,8 @@ public class Etudiant {
     @ManyToMany(mappedBy = "etudiants")
     //@ManyToMany
     private List<Reservation> reservations;
+
+    public void setIdEtudiant(long idEtudiant) {
+        this.id = idEtudiant;
+    }
 }
