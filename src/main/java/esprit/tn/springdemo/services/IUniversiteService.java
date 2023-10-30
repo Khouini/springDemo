@@ -12,4 +12,6 @@ public interface IUniversiteService {
     Universite updateUniversity(Universite u);
 
     Universite retrieveUniversity(long idUniversity);
+
+    Universite affectFoyer(long idUniversity, long idFoyer);
 }

@@ -63,4 +63,16 @@ public class UniversiteController {
         }
         return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
     }
+
+    @PutMapping("/affectFoyer/{idUniversity}/{idFoyer}")
+    public ResponseEntity<ApiResponse> affectFoyer(@PathVariable long idUniversity, @PathVariable long idFoyer) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            apiResponse.setResponse(org.springframework.http.HttpStatus.OK, "Foyer affected");
+            apiResponse.addData("university", universiteService.affectFoyer(idUniversity, idFoyer));
+        } catch (Exception e) {
+            apiResponse.setResponse(org.springframework.http.HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
+    }
 }
