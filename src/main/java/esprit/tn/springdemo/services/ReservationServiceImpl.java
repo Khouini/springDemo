@@ -18,17 +18,12 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
-    public Reservation addReservation(Reservation res) {
-        return reservationRepo.save(res);
-    }
-
-    @Override
     public Reservation updateReservation(Reservation res) {
         return reservationRepo.save(res);
     }
 
     @Override
-    public Reservation retrieveReservation(long idReservation) {
-        return reservationRepo.findById(idReservation).orElse(null);
+    public Reservation retrieveReservation(String idReservation) {
+        return reservationRepo.findById(idReservation);
     }
 }

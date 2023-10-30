@@ -10,6 +10,9 @@ import java.util.List;
 @Repository
 
 public interface ReservationRepo extends JpaRepository<Reservation, Long> {
+
+    Reservation findById(String idReservation);
+
     List<Reservation> findReservationsByAnneeUniversitaireBetween(Date anneeUniversitaire1, Date anneeUniversitaire2);
 
     long countReservationsByAnneeUniversitaireBetween(Date anneeUniversitaire1, Date anneeUniversitaire2);
