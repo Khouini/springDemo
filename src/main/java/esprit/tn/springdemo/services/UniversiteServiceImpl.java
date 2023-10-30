@@ -41,7 +41,11 @@ public class UniversiteServiceImpl implements IUniversiteService {
         if (universite == null) return null;
         Foyer foyer = foyerRepo.findById(idFoyer).orElse(null);
         if (foyer == null) return null;
-        universite.setFoyer(foyer);
-        return universiteRepo.save(universite);
+        foyer.setUniversite(universite);
+        Foyer updatedFoyer = foyerRepo.save(foyer);
+        System.out.println("updatedFoyer = " + updatedFoyer);
+        Universite updatedUniversite = universiteRepo.getById(idUniversity);
+        System.out.println("updatedUniversite = " + updatedUniversite);
+        return updatedUniversite;
     }
 }

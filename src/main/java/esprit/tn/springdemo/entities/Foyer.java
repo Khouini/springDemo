@@ -23,6 +23,6 @@ public class Foyer {
     @OneToOne
     private Universite universite;
 
-    @OneToMany(mappedBy = "foyer")
+    @OneToMany(mappedBy = "foyer", cascade = CascadeType.ALL)
     private List<Bloc> blocs;
 }

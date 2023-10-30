@@ -1,5 +1,6 @@
 package esprit.tn.springdemo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,8 @@ public class Universite {
     private String nom;
     private String adresse;
 
-    @OneToOne(mappedBy = "universite")
+    @OneToOne(mappedBy = "universite", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Foyer foyer;
 
     public void setIdUniversite(Long idUniversite) {

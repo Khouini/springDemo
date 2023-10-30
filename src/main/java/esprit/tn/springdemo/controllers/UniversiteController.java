@@ -68,8 +68,9 @@ public class UniversiteController {
     public ResponseEntity<ApiResponse> affectFoyer(@PathVariable long idUniversity, @PathVariable long idFoyer) {
         ApiResponse apiResponse = new ApiResponse();
         try {
+            Universite universite = universiteService.affectFoyer(idUniversity, idFoyer);
             apiResponse.setResponse(org.springframework.http.HttpStatus.OK, "Foyer affected");
-            apiResponse.addData("university", universiteService.affectFoyer(idUniversity, idFoyer));
+            apiResponse.addData("university", universite);
         } catch (Exception e) {
             apiResponse.setResponse(org.springframework.http.HttpStatus.BAD_REQUEST, e.getMessage());
         }
