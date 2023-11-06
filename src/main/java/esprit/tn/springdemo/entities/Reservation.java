@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -19,16 +20,8 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
-    private Date anneeUniversitaire;
+    private LocalDate anneeUniversitaire;
     private Boolean estValide;
-
-    //@ManyToOne
-    //private Chambre chambre;
-
-    /*@ManyToMany(mappedBy = "reservations")
-    @JoinTable(name = "etudiants_reservations",
-            joinColumns = @JoinColumn(name = "reservation_id"),
-            inverseJoinColumns = @JoinColumn(name = "etudiant_id"))*/
 
     @ManyToMany
     private List<Etudiant> etudiants;

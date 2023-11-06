@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -38,11 +39,11 @@ public class ChambreServiceImpl implements IChambreService {
     }
 
     @Override
-    public List<Chambre> getChambreByReservationAnneeUniversitaire(Date dateDebut, Date dateFin) {
+    public List<Chambre> getChambreByReservationAnneeUniversitaire(LocalDate dateDebut, LocalDate dateFin) {
         List<Chambre> chambres = null;
         for (Chambre c : chambreRepo.findAll()) {
             for (Reservation r : c.getReservations()) {
-                if (r.getAnneeUniversitaire().after(dateDebut) && r.getAnneeUniversitaire().before(dateFin)) {
+                if (r.getAnneeUniversitaire().isAfter(dateDebut) && r.getAnneeUniversitaire().isBefore(dateFin)) {
                     //return chambreRepo.findAll();
                     chambres.add(c);
                 }

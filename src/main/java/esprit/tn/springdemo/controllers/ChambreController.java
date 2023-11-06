@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -112,4 +113,16 @@ public class ChambreController {
         return iChambreService.getChambreByReservationAnneeUniversitaire(dateDebut, dateFin);
     }*
      */
+    @GetMapping("byReservationAnneeUniversitaire/{dateDebut}/{dateFin}")
+    public ResponseEntity<ApiResponse> getChambreByReservationAnneeUniversitaire(@PathVariable LocalDate dateDebut, @PathVariable LocalDate dateFin) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            List<Chambre> chambres = iChambreService.getChambreByReservationAnneeUniversitaire(dateDebut, dateFin);
+            apiResponse.setResponse(org.springframework.http.HttpStatus.OK, "Chambres retrieved");
+            apiResponse.addData("chambres", chambres);
+        } catch (Exception e) {
+            apiResponse.setResponse(org.springframework.http.HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
+    }
 }
