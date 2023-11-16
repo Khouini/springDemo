@@ -23,6 +23,7 @@ public class Chambre {
     private Long id;
 
     private long numero;
+    private long capacite = 0;
     @Enumerated(EnumType.STRING)
     private TypeChambre type;
 

@@ -76,4 +76,19 @@ public class UniversiteController {
         }
         return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
     }
+
+    @PutMapping("/desaffectFoyer/{idUniversity}")
+    public ResponseEntity<ApiResponse> desaffectFoyer(@PathVariable long idUniversity) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            Universite universite = universiteService.desaffecterFoyerAUniversite(idUniversity);
+            System.out.println("after desaffecting service: " + universite);
+            apiResponse.setResponse(org.springframework.http.HttpStatus.OK, "Foyer desaffected");
+            apiResponse.addData("university", universite);
+        } catch (Exception e) {
+            apiResponse.setResponse(org.springframework.http.HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
+    }
+
 }

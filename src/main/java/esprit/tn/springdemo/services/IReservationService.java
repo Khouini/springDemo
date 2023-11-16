@@ -10,4 +10,6 @@ public interface IReservationService {
     Reservation updateReservation(Reservation res);
 
     Reservation retrieveReservation(String idReservation);
+
+    public Reservation ajouterReservation(Reservation reservation, long idChambre, long cinEtudiant);
 }

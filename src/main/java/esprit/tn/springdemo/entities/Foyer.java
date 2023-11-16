@@ -1,5 +1,6 @@
 package esprit.tn.springdemo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +22,19 @@ public class Foyer {
     private long capacite;
 
     @OneToOne
+    @JsonIgnore
     private Universite universite;
 
     @OneToMany(mappedBy = "foyer", cascade = CascadeType.ALL)
     private List<Bloc> blocs;
+
+    @Override
+    public String toString() {
+        return "Foyer{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", capacite=" + capacite +
+                ", universite=" + universite +
+                '}';
+    }
 }

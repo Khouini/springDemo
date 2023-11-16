@@ -14,4 +14,7 @@ public interface IUniversiteService {
     Universite retrieveUniversity(long idUniversity);
 
     Universite affectFoyer(long idUniversity, long idFoyer);
+
+
+    public Universite desaffecterFoyerAUniversite(long idUniversite);
 }

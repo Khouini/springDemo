@@ -16,7 +16,7 @@ public class Universite {
     private String adresse;
 
     @OneToOne(mappedBy = "universite", cascade = CascadeType.ALL)
-    @JsonIgnore
+
     private Foyer foyer;
 
     public void setIdUniversite(Long idUniversite) {
@@ -25,11 +25,20 @@ public class Universite {
 
     @Override
     public String toString() {
-        return "Universite{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", foyer=" + foyer +
-                '}';
+        if (foyer == null) {
+            return "Universite{" +
+                    "id=" + id +
+                    ", nom='" + nom + '\'' +
+                    ", adresse='" + adresse + '\'' +
+                    '}';
+        } else {
+            return "Universite{" +
+                    "id=" + id +
+                    ", nom='" + nom + '\'' +
+                    ", adresse='" + adresse + '\'' +
+                    ", foyer='" + foyer.getId() + '\'' +
+                    '}';
+        }
+
     }
 }
