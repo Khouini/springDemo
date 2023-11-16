@@ -1,6 +1,7 @@
 package esprit.tn.springdemo.controllers;
 
 import esprit.tn.springdemo.entities.Bloc;
+import esprit.tn.springdemo.entities.Chambre;
 import esprit.tn.springdemo.responses.ApiResponse;
 import esprit.tn.springdemo.services.IBlocService;
 import lombok.AllArgsConstructor;
@@ -87,6 +88,19 @@ public class BlocController {
             }
             iBlocService.removeBloc(idBloc);
             apiResponse.setResponse(HttpStatus.OK, "Bloc removed");
+        } catch (Exception e) {
+            apiResponse.setResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return new ResponseEntity<>(apiResponse, apiResponse._getHttpStatus());
+    }
+
+    @PutMapping("affectChambres/{idBloc}")
+    public ResponseEntity<ApiResponse> affectChambres(@RequestBody List<Chambre> chambres, @PathVariable long idBloc) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            Bloc updatedBloc = iBlocService.affectChambres(idBloc, chambres);
+            apiResponse.setResponse(HttpStatus.OK, "chambres affected");
+            apiResponse.addData("bloc", updatedBloc);
         } catch (Exception e) {
             apiResponse.setResponse(HttpStatus.BAD_REQUEST, e.getMessage());
         }

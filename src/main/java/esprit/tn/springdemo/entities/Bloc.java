@@ -24,7 +24,7 @@ public class Bloc {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Foyer foyer;
 
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "bloc")
     //
     //@OneToMany(mappedBy = "bloc", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

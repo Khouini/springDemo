@@ -1,6 +1,7 @@
 package esprit.tn.springdemo.services;
 
 import esprit.tn.springdemo.entities.Bloc;
+import esprit.tn.springdemo.entities.Chambre;
 
 import java.util.List;
 
@@ -15,5 +16,6 @@ public interface IBlocService {
 
     void removeBloc(long idBloc);
 
+    Bloc affectChambres(long blocId, List<Chambre> chambres);
 
 }
